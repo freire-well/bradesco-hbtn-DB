@@ -15,7 +15,16 @@ public class Endereco {
     String numero;
     String bairro;
     String cidade;
+    String estado;
     String cep;
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
     public long getId() {
         return id;
