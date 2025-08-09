@@ -1,6 +1,7 @@
 package models;
 
 import entities.Produto;
+import entities.Produto;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -29,26 +30,33 @@ public class ProdutoModel{
             System.out.println("Finalizando a transação");
         }
     }
+
     public Produto findById(int id){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("admin-jpa");
         EntityManager em = emf.createEntityManager();
 
         return em.find(Produto.class, id);
     }
+
     public List<Produto> findAll(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("admin-jpa");
         EntityManager em = emf.createEntityManager();
        return em.createQuery("Select u FROM produto u", Produto.class).getResultList();
     }
+
     public void update(Produto p, int id){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("admin-jpa");
         EntityManager em = emf.createEntityManager();
+
         Produto prod = findById(id);
-        prod = p;
+        prod.setPreco(p.getPreco());
+        prod.setNome(p.getNome());
+        prod.setQuantidade(p.getQuantidade());
+        prod.setStatus(p.getStatus());
 
         try{
             em.getTransaction().begin();
-            em.merge(prod);
+            em.persist(prod);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.close();

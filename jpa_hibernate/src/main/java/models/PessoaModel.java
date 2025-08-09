@@ -28,34 +28,42 @@ public class PessoaModel {
             System.out.println("Finalizando a transação");
         }
     }
+
     public Pessoa findById(int id){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("admin-jpa");
         EntityManager em = emf.createEntityManager();
 
         return em.find(Pessoa.class, id);
     }
+
     public List<Pessoa> findAll(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("admin-jpa");
         EntityManager em = emf.createEntityManager();
         return em.createQuery("Select u FROM Pessoa u", Pessoa.class).getResultList();
     }
+
     public void update(Pessoa p, int id){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("admin-jpa");
         EntityManager em = emf.createEntityManager();
-        Pessoa pess = p;
+
+        Pessoa pess = findById(id);
+        pess.setCpf(p.getCpf());
+        pess.setEmail(p.getEmail());
+        pess.setNome(p.getNome());
+        pess.setDataNascimento(p.getDataNascimento());
+        pess.setIdade(p.getIdade());
 
         try{
             em.getTransaction().begin();
-            em.merge(pess);
+            em.persist(pess);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.close();
         }finally {
             em.close();
         }
-
-
     }
+
     public void delete(Pessoa p){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("admin-jpa");
         EntityManager em = emf.createEntityManager();
