@@ -3,15 +3,16 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 
 
 public class MongoDBConnection {
 
 
     // Variáveis de configuração
-    private static final String USERNAME = "aluno";
-    private static final String PASSWORD = "BN10UNhMxMDZUgEh";
-    private static final String CLUSTER_URL = "cluster0.brbyr.mongodb.net"; // Substitua pelo seu cluster se for diferente
+    private static final String USERNAME = "wellingtonfreire";
+    private static final String PASSWORD = "7Y5IuoRYC9LGNJjo";
+    private static final String CLUSTER_URL = "cluster0.ukwo8vu.mongodb.net"; // Substitua pelo seu cluster se for diferente
     private static final String DATABASE_NAME = "Cluster0"; // Substitua pelo nome do seu banco de dados
 
 
@@ -38,7 +39,7 @@ public class MongoDBConnection {
 
             // Selecionando o banco de dados
             database = mongoClient.getDatabase(DATABASE_NAME);
-
+            database.runCommand(new Document("ping", 1));
 
             System.out.println("Conexão estabelecida com sucesso ao MongoDB!");
         } catch (Exception e) {
